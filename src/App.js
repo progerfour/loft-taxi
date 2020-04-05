@@ -5,10 +5,11 @@ import "./App.css";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Map from "./pages/Map";
+import Profile from "./pages/Profile";
 
 const pagesMap = {
   map:  Map,
-  profile: Map,
+  profile: Profile,
   exit:  Login,
   login: Login,
   register: Register,
