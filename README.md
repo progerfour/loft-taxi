@@ -16,13 +16,13 @@
 ![Компонента страницы “Логин”](./screenshots/homework-1/login.JPG)
 
 *Страница “Регистрация”*<br />
-![Компонента страницы “Регистрация”](./screenshots/homework-01/register.JPG)
+![Компонента страницы “Регистрация”](./screenshots/homework-1/register.JPG)
 
 *Страница “Карта”*<br />
-![Компонента страницы “Карта”](./screenshots/homework-01/map.JPG)
+![Компонента страницы “Карта”](./screenshots/homework-1/map.JPG)
 
 *Страница “Профиль”*<br />
-![Компонента страницы “Профиль”](./screenshots/homework-01/profile.JPG)
+![Компонента страницы “Профиль”](./screenshots/homework-1/profile.JPG)
 
 ## Запуск
 `npm start`
