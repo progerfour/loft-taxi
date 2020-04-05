@@ -1,0 +1,10 @@
+.header{
+    z-index:1;
+    &__logo{
+        line-height :1.5
+    }
+
+    &__link{
+        margin-top: 16px !important;
+    }
+}
