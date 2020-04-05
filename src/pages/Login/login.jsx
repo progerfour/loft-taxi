@@ -8,8 +8,9 @@ import "./login.scss";
 const mainClass = "loginPage";
 
 class Login extends Component {
+
   render() {
-    const { className } = this.props;
+    const { className, onChangePage } = this.props;
     const classes = classNames(className);
     return (
       <div className={classes}>
@@ -18,7 +19,7 @@ class Login extends Component {
             <Logo white />
           </Grid>
           <Grid item xs={3}>
-            <LoginBlock></LoginBlock>
+            <LoginBlock onChangePage={onChangePage}/>
           </Grid>
         </Grid>
       </div>

@@ -8,13 +8,14 @@ import { pagesMap } from "../../utils";
 const mainClass = "header";
 
 class Header extends Component {
-  pages = [pagesMap["map"], pagesMap["profile"], pagesMap["exit"]];
+  pages = [pagesMap.map, pagesMap.profile, pagesMap.exit];
 
   handleBtnClick = (event) => {
     event.preventDefault();
 
-    const { target } = event;
-    console.log(target);
+    const { onChangePage } = this.props;
+    const { currentTarget } = event;
+    onChangePage(currentTarget.id)
 
   };
 
@@ -39,7 +40,7 @@ class Header extends Component {
                       href={page.href}
                       key={page.id}
                       className={`${mainClass}__link`}
-                      onClick={this.handleLinkClick}
+                      onClick={this.handleBtnClick}
                     >
                       {page.caption}
                     </Button>

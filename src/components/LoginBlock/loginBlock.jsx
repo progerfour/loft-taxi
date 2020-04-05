@@ -15,12 +15,20 @@ import "./loginBlock.scss";
 const mainClass = "loginBlock";
 
 class LoginBlock extends Component {
+  onSubmitClick = (event) => {
+    event.preventDefault();
+    const { onChangePage } = this.props;
+    onChangePage("map");
+  };
+
+
   render() {
-    const { className, children } = this.props;
+    const { className,isRegister } = this.props;
     const classes = classNames(className, mainClass);
+    const linkName = isRegister : "Войти"
     return (
       <Paper elevation={1} className={classes}>
-        <form>
+        <form onSubmit={this.onSubmitClick}>
           <Grid container>
             <Grid item xs={12}>
               <Typography
@@ -33,7 +41,7 @@ class LoginBlock extends Component {
               </Typography>
               <Typography component="p" align="left" className={`${mainClass}__register`}>
                 Новый пользователь?
-                <Link> Зарегистрируйтесь</Link>
+                <Link > Зарегистрируйтесь</Link>
               </Typography>
             </Grid>
             <Grid item xs={12}>

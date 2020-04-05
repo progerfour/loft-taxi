@@ -27,11 +27,11 @@ class Map extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, onChangePage } = this.props;
     const classes = classNames(className, mainClass);
     return (
       <div>
-        <Header/>
+        <Header onChangePage={onChangePage}/>
         <div id={this.map_id} className={`${mainClass}`} ref={this.map}></div>
       </div>
     );
