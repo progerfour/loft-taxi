@@ -15,7 +15,7 @@ class Header extends Component {
 
     const { onChangePage } = this.props;
     const { currentTarget } = event;
-    onChangePage(currentTarget.id)
+    typeof onChangePage == "function" && onChangePage(currentTarget.id)
 
   };
 

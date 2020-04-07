@@ -19,14 +19,15 @@ class Profile extends Component {
   onSubmitClick = (event) => {
     event.preventDefault();
     const { onChangePage } = this.props;
-    onChangePage("map");
+    typeof (onChangePage) == "function" &&
+      onChangePage("map");
   };
 
   render() {
     const { className, onChangePage } = this.props;
     const classes = classNames(className);
     return (
-      <div>
+      <div className = {classes}>
         <Header onChangePage={onChangePage} />
         <Paper className={mainClass}>
           <Grid container alignItems="center" direction-xs-column>

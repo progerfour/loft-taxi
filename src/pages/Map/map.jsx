@@ -27,8 +27,7 @@ class Map extends Component {
   }
 
   render() {
-    const { className, onChangePage } = this.props;
-    const classes = classNames(className, mainClass);
+    const { onChangePage } = this.props;
     return (
       <div>
         <Header onChangePage={onChangePage}/>

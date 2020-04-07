@@ -18,12 +18,12 @@ class LoginBlock extends Component {
   onSubmitClick = (event) => {
     event.preventDefault();
     const { onChangePage } = this.props;
-    onChangePage("map");
+    typeof onChangePage == "function" && onChangePage("map");
   };
 
   changeType = () => {
     const { onChangePage, isRegister } = this.props;
-    onChangePage(isRegister ? "login" : "register");
+    typeof onChangePage == "function" && onChangePage(isRegister ? "login" : "register");
   };
 
   render() {
