@@ -1,0 +1,14 @@
+.loginBlock {
+    padding: 44px 60px;
+    min-width: 500px;
+    margin-top: 48px;
+    margin-bottom: 48px;
+
+    &__bottom_30{
+        margin-bottom: 30px !important;
+    }
+
+    &__register{
+        margin-bottom: 10px !important;
+    }
+}

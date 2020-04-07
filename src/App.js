@@ -1,26 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+import "./App.css";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Map from "./pages/Map";
+import Profile from "./pages/Profile";
+
+const pagesMap = {
+  map:  Map,
+  profile: Profile,
+  exit:  Login,
+  login: Login,
+  register: Register,
+};
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { currentPage: "login" };
+  }
+
+  changeCurrentPage = (newPage) => {
+    this.setState({ currentPage: newPage });
+  };
+
+  render() {
+    const { currentPage } = this.state;
+    const Page = pagesMap[currentPage];
+    return (
+      <div className="App">
+        <Page onChangePage={this.changeCurrentPage}></Page>
+      </div>
+    );
+  }
 }
 
 export default App;

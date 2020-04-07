@@ -1,68 +1,35 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Домашнее задание 1:
 
-## Available Scripts
+1. Cоздано приложение  при помощи [Create React App](https://github.com/facebook/create-react-app).
 
-In the project directory, you can run:
+2. В первом приближении сверстаны страницы логина, регистрации, карты и профиля.
 
-### `yarn start`
+3. Навигация реализована при помощи стейта. При сабмите формы логина пользователь попадает на страницу с картой. 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+4. Для верстки были установлены npm пакеты [material-ui](https://github.com/mui-org/material-ui) и [node-sass](https://github.com/sass/node-sass), а также тема [loft-taxi-mui-theme](https://www.npmjs.com/package/loft-taxi-mui-theme).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+5. Карта сделана с помощью [mapbox](https://github.com/mapbox/mapbox-gl-js).
 
-### `yarn test`
+## Cкриншоты:
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+*Страница “Логин”*<br />
+![Компонента страницы “Логин”](./screenshots/homework-1/login.JPG)
 
-### `yarn build`
+*Страница “Регистрация”*<br />
+![Компонента страницы “Регистрация”](./screenshots/homework-1/register.JPG)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+*Страница “Карта”*<br />
+![Компонента страницы “Карта”](./screenshots/homework-1/map.JPG)
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+*Страница “Профиль”*<br />
+![Компонента страницы “Профиль”](./screenshots/homework-1/profile.JPG)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Запуск
+`npm start`
 
-### `yarn eject`
+Приложение в режиме разработки.<br />
+Откройте [http://localhost:3000](http://localhost:3000), чтобы просмотреть его в браузере.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`npm run build`
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Собирает приложение в папке `build`.
