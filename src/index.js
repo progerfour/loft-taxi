@@ -1,18 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import {theme} from "loft-taxi-mui-theme";
-import {MuiThemeProvider} from "@material-ui/core/styles";
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import { theme } from "loft-taxi-mui-theme";
+import { MuiThemeProvider } from "@material-ui/core/styles";
+
+import { AuthProvider } from "./context/authContext";
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <React.StrictMode>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </React.StrictMode>
   </MuiThemeProvider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
