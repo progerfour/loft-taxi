@@ -2,6 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { Logo } from "loft-taxi-mui-theme";
 import { Grid } from "@material-ui/core/";
+import PropTypes from "prop-types";
 
 import LoginBlock from "../../components/LoginBlock/index";
 import "./login.scss";
@@ -17,11 +18,16 @@ const Login = (props) => {
           <Logo white />
         </Grid>
         <Grid item xs={3}>
-          <LoginBlock onChangePage={onChangePage} />
+          <LoginBlock onChangePage={onChangePage} isRegister={false} />
         </Grid>
       </Grid>
     </div>
   );
+};
+
+Login.propTypes = {
+  className: PropTypes.string,
+  onChangePage: PropTypes.func.isRequired,
 };
 
 export default Login;

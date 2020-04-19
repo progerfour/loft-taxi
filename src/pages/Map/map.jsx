@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import classNames from "classnames";
 import mapboxgl from "mapbox-gl";
+import PropTypes from "prop-types";
 
 import Header from "../../components/Header";
 import "./map.scss";
@@ -11,6 +12,10 @@ class Map extends Component {
   map = null;
   map_id = "map_order";
   mapContainer = React.createRef();
+
+  static propTypes = {
+    onChangePage: PropTypes.func.isRequired,
+  };
 
   componentDidMount() {
     mapboxgl.accessToken =

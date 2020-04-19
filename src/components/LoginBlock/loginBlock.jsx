@@ -10,6 +10,7 @@ import {
   InputLabel,
   Input,
 } from "@material-ui/core/";
+import PropTypes from "prop-types";
 
 import { AuthContext } from "../../context/authContext";
 import "./loginBlock.scss";
@@ -17,7 +18,7 @@ const mainClass = "loginBlock";
 
 const LoginBlock = (props) => {
   const { login } = useContext(AuthContext);
-  const className = classNames(mainClass, props.classes);
+  const className = classNames(mainClass, props.className);
   const header = props.isRegister ? "Регистрация" : "Войти";
   const question = props.isRegister ? "Уже зарегистрированы?" : "Новый пользователь?";
   const linkName = props.isRegister ? "Войти" : "Зарегистрируйтесь";
@@ -110,6 +111,12 @@ const LoginBlock = (props) => {
       </form>
     </Paper>
   );
+};
+
+LoginBlock.propTypes = {
+  className: PropTypes.string,
+  isRegister: PropTypes.bool.isRequired,
+  onChangePage: PropTypes.func.isRequired,
 };
 
 export default LoginBlock;

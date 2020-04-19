@@ -10,6 +10,7 @@ import {
   InputLabel,
   Input,
 } from "@material-ui/core/";
+import PropTypes from "prop-types";
 
 import Header from "../../components/Header";
 import "./profile.scss";
@@ -27,7 +28,7 @@ const Profile = ({ className, onChangePage }) => {
     <div className={classes}>
       <Header onChangePage={onChangePage} />
       <Paper className={mainClass}>
-        <Grid container alignItems="center" direction-xs-column>
+        <Grid container alignItems="center">
           <Grid item xs={12}>
             <Paper className={`${mainClass}__form`}>
               <Typography variant="h4" component="h1" align="center">
@@ -84,6 +85,11 @@ const Profile = ({ className, onChangePage }) => {
       </Paper>
     </div>
   );
+};
+
+Profile.propTypes = {
+  className: PropTypes.string,
+  onChangePage: PropTypes.func.isRequired,
 };
 
 export default Profile;

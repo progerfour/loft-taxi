@@ -2,22 +2,21 @@ import React, { useContext } from "react";
 import classNames from "classnames";
 import { Grid, Paper, Button, Toolbar } from "@material-ui/core/";
 import { Logo } from "loft-taxi-mui-theme";
+import PropTypes from "prop-types";
 
 import "./header.scss";
 import { pagesMap } from "../../utils";
 import { AuthContext } from "../../context/authContext";
 const mainClass = "header";
 
-const Header = (props) => {
+const Header = ({ className, onChangePage }) => {
   const { logout } = useContext(AuthContext);
-  const { className } = props;
   const classes = classNames(className, mainClass);
 
   const pages = [pagesMap.map, pagesMap.profile, pagesMap.exit];
 
   const handleBtnClick = (event) => {
     event.preventDefault();
-    const { onChangePage } = props;
     const { currentTarget } = event;
 
     if (currentTarget.id === pagesMap.exit.id) logout();
@@ -52,6 +51,11 @@ const Header = (props) => {
       </Toolbar>
     </Paper>
   );
+};
+
+Header.propTypes = {
+  className: PropTypes.string,
+  onChangePage: PropTypes.func.isRequired,
 };
 
 export default Header;

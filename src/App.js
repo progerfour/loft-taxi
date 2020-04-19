@@ -16,13 +16,18 @@ const pagesMap = {
 };
 
 const App = () => {
-  const {isLoggedIn} = useContext(AuthContext);
+  const { isLoggedIn } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState("login");
-  const ComponentPage = pagesMap[ 
-    isLoggedIn
-    ?  (currentPage ===  "register" || currentPage ===  "login") ? "map" : currentPage 
-    :  (currentPage === "register") ? "register" : "login"
-  ];
+  const ComponentPage =
+    pagesMap[
+      isLoggedIn
+        ? currentPage === "register" || currentPage === "login"
+          ? "map"
+          : currentPage
+        : currentPage === "register"
+        ? "register"
+        : "login"
+    ];
 
   return (
     <div className="App">
