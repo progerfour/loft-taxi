@@ -1,39 +1,39 @@
-import React, { Component } from "react";
-
+import React, { useContext, useState } from "react";
 
 import "./App.css";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Map from "./pages/Map";
 import Profile from "./pages/Profile";
+import { AuthContext } from "./context/authContext";
 
 const pagesMap = {
-  map:  Map,
+  map: Map,
   profile: Profile,
-  exit:  Login,
+  exit: Login,
   login: Login,
   register: Register,
 };
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { currentPage: "login" };
-  }
+const App = () => {
+  const { isLoggedIn } = useContext(AuthContext);
+  const [currentPage, setCurrentPage] = useState("login");
+  const ComponentPage =
+    pagesMap[
+      isLoggedIn
+        ? currentPage === "register" || currentPage === "login"
+          ? "map"
+          : currentPage
+        : currentPage === "register"
+        ? "register"
+        : "login"
+    ];
 
-  changeCurrentPage = (newPage) => {
-    this.setState({ currentPage: newPage });
-  };
-
-  render() {
-    const { currentPage } = this.state;
-    const Page = pagesMap[currentPage];
-    return (
-      <div className="App">
-        <Page onChangePage={this.changeCurrentPage}></Page>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="App">
+      <ComponentPage onChangePage={setCurrentPage}></ComponentPage>
+    </div>
+  );
+};
 
 export default App;

@@ -1,28 +1,15 @@
-## Домашнее задание 1:
+## Домашнее задание 2:
 
-1. Cоздано приложение  при помощи [Create React App](https://github.com/facebook/create-react-app).
+1. Добавлено использование контекста.
 
-2. В первом приближении сверстаны страницы логина, регистрации, карты и профиля.
+2. Добавлена проверка props с помощью библиотеки [prop-types](https://www.npmjs.com/package/prop-types).
 
-3. Навигация реализована при помощи стейта. При сабмите формы логина пользователь попадает на страницу с картой. 
+3. Классовые компоненты преобразованы в функциональные.
 
-4. Для верстки были установлены npm пакеты [material-ui](https://github.com/mui-org/material-ui) и [node-sass](https://github.com/sass/node-sass), а также тема [loft-taxi-mui-theme](https://www.npmjs.com/package/loft-taxi-mui-theme).
+## Предыдущие домашние задания: 
 
-5. Карта сделана с помощью [mapbox](https://github.com/mapbox/mapbox-gl-js).
+[ДЗ №1](https://github.com/XakimAA/loft-taxi/blob/homework-1/README.md).
 
-## Cкриншоты:
-
-*Страница “Логин”*<br />
-![Компонента страницы “Логин”](./screenshots/homework-1/login.JPG)
-
-*Страница “Регистрация”*<br />
-![Компонента страницы “Регистрация”](./screenshots/homework-1/register.JPG)
-
-*Страница “Карта”*<br />
-![Компонента страницы “Карта”](./screenshots/homework-1/map.JPG)
-
-*Страница “Профиль”*<br />
-![Компонента страницы “Профиль”](./screenshots/homework-1/profile.JPG)
 
 ## Запуск
 `npm start`
