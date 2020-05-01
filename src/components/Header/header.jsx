@@ -1,16 +1,15 @@
-import React, { useContext } from "react";
+import React from "react";
 import classNames from "classnames";
 import { Grid, Paper, Button, Toolbar } from "@material-ui/core/";
 import { Logo } from "loft-taxi-mui-theme";
 import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 
 import "./header.scss";
 import { pagesMap } from "../../utils";
-import { AuthContext } from "../../context/authContext";
 const mainClass = "header";
 
-const Header = ({ className, onChangePage }) => {
-  const { logout } = useContext(AuthContext);
+const Header = ({ className, history }) => {
   const classes = classNames(className, mainClass);
 
   const pages = [pagesMap.map, pagesMap.profile, pagesMap.exit];
@@ -19,8 +18,10 @@ const Header = ({ className, onChangePage }) => {
     event.preventDefault();
     const { currentTarget } = event;
 
-    if (currentTarget.id === pagesMap.exit.id) logout();
-    else typeof onChangePage == "function" && onChangePage(currentTarget.id);
+    if (currentTarget.id === pagesMap.exit.id) 
+      history.push('/login');
+    else 
+      history.push(`/${currentTarget.id}`);
   };
 
   return (
@@ -55,7 +56,6 @@ const Header = ({ className, onChangePage }) => {
 
 Header.propTypes = {
   className: PropTypes.string,
-  onChangePage: PropTypes.func.isRequired,
 };
 
-export default Header;
+export default withRouter(Header);

@@ -8,7 +8,7 @@ import LoginBlock from "../../components/LoginBlock/index";
 import "./register.scss";
 const mainClass = "loginPage";
 
-const Register = ({ className, onChangePage }) => {
+const Register = ({ className }) => {
   const classes = classNames(className);
   return (
     <div className={classes}>
@@ -17,7 +17,7 @@ const Register = ({ className, onChangePage }) => {
           <Logo white />
         </Grid>
         <Grid item xs={3}>
-          <LoginBlock onChangePage={onChangePage} isRegister />
+          <LoginBlock isRegister />
         </Grid>
       </Grid>
     </div>
@@ -25,8 +25,7 @@ const Register = ({ className, onChangePage }) => {
 };
 
 Register.propTypes = {
-  className: PropTypes.string,
-  onChangePage: PropTypes.func.isRequired,
+  className: PropTypes.string
 };
 
 export default Register;
