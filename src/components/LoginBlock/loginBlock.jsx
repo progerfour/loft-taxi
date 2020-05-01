@@ -11,27 +11,34 @@ import {
 } from "@material-ui/core/";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
+import { getIsLogin, getError, fetchAuthLogin, fetchAuthRegister } from "../../modules/auth";
+
+import { connect } from "react-redux";
 
 import "./loginBlock.scss";
 const mainClass = "loginBlock";
 
 const LoginBlock = (props) => {
-  const { isRegister } = props;
+  const { isRegister, fetchAuthLogin, fetchAuthRegister } = props;
   const className = classNames(mainClass, props.className);
-  const header = props.isRegister ? "Регистрация" : "Войти";
-  const question = props.isRegister
+  const header = isRegister ? "Регистрация" : "Войти";
+  const question = isRegister
     ? "Уже зарегистрированы?"
     : "Новый пользователь?";
-  const linkName = props.isRegister ? "Войти" : "Зарегистрируйтесь";
+  const linkName = isRegister ? "Войти" : "Зарегистрируйтесь";
 
-  const [values, setValues] = useState({
-    username: "",
+  const [values, setValues] = useState({  
+    email: "",
     password: "",
+    name: "",
+    surname:""
   });
 
   const handlerSubmitClick = (event) => {
     event.preventDefault();
-    //login(values.username, values.password);
+    isRegister 
+    ? fetchAuthRegister(values)
+    : fetchAuthLogin({ email: values.email, password: values.password });
   };
 
   const handlerDataInput = (inputID) => (event) => {
@@ -69,8 +76,8 @@ const LoginBlock = (props) => {
               >
                 <InputLabel htmlFor="username">Имя пользователя *</InputLabel>
                 <Input
-                  id="username"
-                  onChange={handlerDataInput("username")}
+                  id="email"
+                  onChange={handlerDataInput("email")}
                   required
                 />
               </FormControl>
@@ -87,7 +94,7 @@ const LoginBlock = (props) => {
                 </InputLabel>
                 <Input
                   id="email"
-                  onChange={handlerDataInput("username")}
+                  onChange={handlerDataInput("email")}
                   required
                 />
               </FormControl>
@@ -100,7 +107,7 @@ const LoginBlock = (props) => {
                 className={`${mainClass}__bottom_30`}
               >
                 <InputLabel htmlFor="name">Имя *</InputLabel>
-                <Input id="name" required />
+                <Input id="name" onChange={handlerDataInput("name")} required />
               </FormControl>
             </Grid>
           )}
@@ -111,7 +118,7 @@ const LoginBlock = (props) => {
                 className={`${mainClass}__bottom_30`}
               >
                 <InputLabel htmlFor="surname">Фамилия *</InputLabel>
-                <Input id="surname" required />
+                <Input id="surname" onChange={handlerDataInput("surname")} required />
               </FormControl>
             </Grid>
           )}
@@ -142,4 +149,10 @@ LoginBlock.propTypes = {
   isRegister: PropTypes.bool.isRequired,
 };
 
-export default LoginBlock;
+const mapStateToProps = (state) => ({
+  isLogin: getIsLogin(state),
+  error: getError(state),
+});
+const mapDispatchToProps = { fetchAuthLogin, fetchAuthRegister };
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginBlock);
