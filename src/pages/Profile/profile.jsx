@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import { MCIcon } from "loft-taxi-mui-theme";
 import {
@@ -11,16 +11,46 @@ import {
   Input,
 } from "@material-ui/core/";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
 
 import Header from "../../components/Header";
 import "./profile.scss";
+import {
+  getProfile,
+  getError,
+  fetchProfileLoad,
+  fetchProfileSave,
+  fetchProfileSet,
+} from "../../modules/profile";
+
 const mainClass = "profile";
 
-const Profile = ({ className }) => {
+const Profile = ({
+  className,
+  profile,
+  error,
+  fetchProfileLoad,
+  fetchProfileSave,
+}) => {
   const classes = classNames(className);
+  const [values, setValues] = useState({
+    cardNumber: "",
+    expiryDate: "",
+    cardName: "",
+    cvc: "",
+  });
+
+  useEffect(() => {
+    setValues(profile);
+  }, [profile]);
 
   const handlerSubmitClick = (event) => {
     event.preventDefault();
+    fetchProfileSave(values);
+  };
+
+  const handlerDataInput = (inputID) => (event) => {
+    setValues({ ...values, [inputID]: event.target.value });
   };
 
   return (
@@ -58,16 +88,26 @@ const Profile = ({ className }) => {
                             <InputLabel htmlFor="cardNumber">
                               Номер карты *
                             </InputLabel>
-                            <Input id="cardNumber" required />
+                            <Input
+                              id="cardNumber"
+                              value={values.cardNumber}
+                              onChange={handlerDataInput("cardNumber")}
+                              required
+                            />
                           </FormControl>
                           <FormControl
                             fullWidth={true}
                             className={`${mainClass}__bottom_30`}
                           >
-                            <InputLabel htmlFor="validity">
+                            <InputLabel htmlFor="expiryDate">
                               Срок действия *
                             </InputLabel>
-                            <Input id="validity" required />
+                            <Input
+                              id="expiryDate"
+                              value={values.expiryDate}
+                              onChange={handlerDataInput("expiryDate")}
+                              required
+                            />
                           </FormControl>
                         </Paper>
                       </Grid>
@@ -77,17 +117,27 @@ const Profile = ({ className }) => {
                             fullWidth={true}
                             className={`${mainClass}__bottom_30`}
                           >
-                            <InputLabel htmlFor="fullname">
+                            <InputLabel htmlFor="cardName">
                               Имя владельца *
                             </InputLabel>
-                            <Input id="fullname" required />
+                            <Input
+                              id="cardName"
+                              value={values.cardName}
+                              onChange={handlerDataInput("cardName")}
+                              required
+                            />
                           </FormControl>
                           <FormControl
                             fullWidth={true}
                             className={`${mainClass}__bottom_30`}
                           >
-                            <InputLabel htmlFor="CVS">CVS *</InputLabel>
-                            <Input id="CVS" required />
+                            <InputLabel htmlFor="cvc">CVC *</InputLabel>
+                            <Input
+                              id="cvc"
+                              value={values.cvc}
+                              onChange={handlerDataInput("cvc")}
+                              required
+                            />
                           </FormControl>
                         </Paper>
                       </Grid>
@@ -114,7 +164,17 @@ const Profile = ({ className }) => {
 };
 
 Profile.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
-export default Profile;
+const mapStateToProps = (state) => ({
+  profile: getProfile(state),
+  error: getError(state),
+});
+
+const mapDispatchToProps = {
+  fetchProfileLoad,
+  fetchProfileSave,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

@@ -5,7 +5,7 @@ import {
   fetchAuthSuccess,
   fetchAuthFailure,
   fetchAuthLogout,
-  fetchAuthRegister
+  fetchAuthRegister,
 } from "./actions";
 
 const storageToken = window.localStorage.getItem("token");

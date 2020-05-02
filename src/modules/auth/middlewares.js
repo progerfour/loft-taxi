@@ -6,6 +6,8 @@ import {
   fetchAuthLogout,
 } from "./actions";
 
+import { fetchProfileLoad, fetchProfileClear } from "../profile";
+
 const request = (path, payload, dispatch) => {
   fetch(`https://loft-taxi.glitch.me/${path}`, {
     method: "POST",
@@ -33,6 +35,7 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
     request("register", action.payload, store.dispatch);
   } else if (action.type === fetchAuthLogout.toString()) {
     window.localStorage.removeItem("token");
+    store.dispatch(fetchProfileClear());
   }
   return next(action);
 };

@@ -14,7 +14,12 @@ import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 import "./loginBlock.scss";
-import { getIsLogin, getError, fetchAuthLogin, fetchAuthRegister } from "../../modules/auth";
+import {
+  getIsLogin,
+  getError,
+  fetchAuthLogin,
+  fetchAuthRegister,
+} from "../../modules/auth";
 
 const mainClass = "loginBlock";
 
@@ -22,34 +27,32 @@ const LoginBlock = (props) => {
   const { isRegister, fetchAuthLogin, fetchAuthRegister, isLogin } = props;
   const className = classNames(mainClass, props.className);
   const header = isRegister ? "Регистрация" : "Войти";
-  const question = isRegister
-    ? "Уже зарегистрированы?"
-    : "Новый пользователь?";
+  const question = isRegister ? "Уже зарегистрированы?" : "Новый пользователь?";
   const linkName = isRegister ? "Войти" : "Зарегистрируйтесь";
   const history = useHistory();
 
-  const [values, setValues] = useState({  
+  const [values, setValues] = useState({
     email: "",
     password: "",
     name: "",
-    surname:""
+    surname: "",
   });
 
-  useEffect(()=>{
-    if (isLogin)
-      history.push("/map");
-  },[isLogin])
+  useEffect(() => {
+    if (isLogin) history.push("/map");
+  }, [isLogin]);
 
   const handlerSubmitClick = (event) => {
     event.preventDefault();
-    isRegister 
-    ? fetchAuthRegister(values)
-    : fetchAuthLogin({ email: values.email, password: values.password });
+    isRegister
+      ? fetchAuthRegister(values)
+      : fetchAuthLogin({ email: values.email, password: values.password });
   };
 
   const handlerDataInput = (inputID) => (event) => {
     setValues({ ...values, [inputID]: event.target.value });
   };
+
   return (
     <Paper elevation={1} className={className}>
       <form onSubmit={handlerSubmitClick}>
@@ -124,7 +127,11 @@ const LoginBlock = (props) => {
                 className={`${mainClass}__bottom_30`}
               >
                 <InputLabel htmlFor="surname">Фамилия *</InputLabel>
-                <Input id="surname" onChange={handlerDataInput("surname")} required />
+                <Input
+                  id="surname"
+                  onChange={handlerDataInput("surname")}
+                  required
+                />
               </FormControl>
             </Grid>
           )}
