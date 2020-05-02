@@ -3,6 +3,7 @@ import {
   fetchProfileSet,
   fetchProfileFailure,
   fetchProfileLoad,
+  fetchProfileSubmitSucceded,
 } from "./actions";
 
 import { getToken } from "../auth";
@@ -24,7 +25,7 @@ export const profileFetchMiddleware = (store) => (next) => (action) => {
       .then((answer) => {
         if (answer.success) {
           store.dispatch(fetchProfileSet(action.payload));
-          window.localStorage.setItem("profile", action.payload);
+          store.dispatch(fetchProfileSubmitSucceded(true));
         } else store.dispatch(fetchProfileFailure(answer.error));
       })
       .catch((error) => {

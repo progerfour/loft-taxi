@@ -5,6 +5,7 @@ import {
   fetchProfileClear,
   fetchProfileSet,
   fetchProfileFailure,
+  fetchProfileSubmitSucceded,
 } from "./actions";
 
 const profile = handleActions(
@@ -23,7 +24,15 @@ const error = handleActions(
   null
 );
 
+const submitSucceded = handleActions(
+  {
+    [fetchProfileSubmitSucceded]: (_state, action) => action.payload,
+  },
+  false
+);
+
 export default combineReducers({
   profile,
   error,
+  submitSucceded,
 });
