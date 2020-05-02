@@ -3,6 +3,7 @@ import {
   fetchAuthSuccess,
   fetchAuthFailure,
   fetchAuthRegister,
+  fetchAuthLogout,
 } from "./actions";
 
 const request = (path, payload, dispatch) => {
@@ -30,6 +31,8 @@ export const authFetchMiddleware = (store) => (next) => (action) => {
     request("auth", action.payload, store.dispatch);
   } else if (action.type === fetchAuthRegister.toString()) {
     request("register", action.payload, store.dispatch);
+  } else if (action.type === fetchAuthLogout.toString()) {
+    window.localStorage.removeItem("token");
   }
   return next(action);
 };

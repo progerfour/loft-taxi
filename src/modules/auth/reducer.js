@@ -8,13 +8,15 @@ import {
   fetchAuthRegister
 } from "./actions";
 
+const storageToken = window.localStorage.getItem("token");
+
 const isLogin = handleActions(
   {
     [fetchAuthSuccess]: () => true,
     [fetchAuthFailure]: () => false,
     [fetchAuthLogout]: () => false,
   },
-  false
+  !!storageToken
 );
 
 const token = handleActions(
@@ -22,7 +24,7 @@ const token = handleActions(
     [fetchAuthSuccess]: (_state, action) => action.payload,
     [fetchAuthLogout]: () => null,
   },
-  null
+  storageToken
 );
 
 const error = handleActions(
