@@ -5,41 +5,31 @@ import {
   fetchAuthRegister,
 } from "./actions";
 
+const request = (path, payload, dispatch) => {
+  fetch(`https://loft-taxi.glitch.me/${path}`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => response.json())
+    .then((answer) => {
+      if (answer.success) {
+        dispatch(fetchAuthSuccess(answer.token));
+        window.localStorage.setItem("token", answer.token);
+      } else dispatch(fetchAuthFailure(answer.error));
+    })
+    .catch((error) => {
+      dispatch(fetchAuthFailure(error));
+    });
+};
+
 export const authFetchMiddleware = (store) => (next) => (action) => {
   if (action.type === fetchAuthLogin.toString()) {
-    fetch(`https://loft-taxi.glitch.me/auth`, {
-      method: "POST",
-      body: JSON.stringify(action.payload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((answer) => {
-        answer.success
-          ? store.dispatch(fetchAuthSuccess(answer.token))
-          : store.dispatch(fetchAuthFailure(answer.error));
-      })
-      .catch((error) => {
-        store.dispatch(fetchAuthFailure(error));
-      });
+    request("auth", action.payload, store.dispatch);
   } else if (action.type === fetchAuthRegister.toString()) {
-    fetch(`https://loft-taxi.glitch.me/register`, {
-      method: "POST",
-      body: JSON.stringify(action.payload),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((answer) => {
-        answer.success
-          ? store.dispatch(fetchAuthSuccess(answer.token))
-          : store.dispatch(fetchAuthFailure(answer.error));
-      })
-      .catch((error) => {
-        store.dispatch(fetchAuthFailure(error));
-      });
+    request("register", action.payload, store.dispatch);
   }
   return next(action);
 };

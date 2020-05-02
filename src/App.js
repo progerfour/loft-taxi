@@ -5,17 +5,18 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Map from "./pages/Map";
 import Profile from "./pages/Profile";
-import { Route } from "react-router-dom";
-
+import { Route, Switch } from "react-router-dom";
+import PrivateRoute from "./components/PrivateRoute";
 const App = () => {
-
   return (
     <div className="App">
-      <Route exact path="/" component={Login} />
-      <Route path="/login" component={Login} />
-      <Route path="/map" component={Map} />
-      <Route path="/profile" component={Profile} />
-      <Route path="/register" component={Register} />
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route path="/login" component={Login} />
+        <PrivateRoute path="/map" component={Map} loginPath="/login" />
+        <PrivateRoute path="/profile" component={Profile} loginPath="/login" />
+        <Route path="/register" component={Register} />
+      </Switch>
     </div>
   );
 };

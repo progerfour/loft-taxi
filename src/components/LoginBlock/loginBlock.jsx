@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import {
   Grid,
@@ -10,22 +10,23 @@ import {
   Input,
 } from "@material-ui/core/";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
-import { getIsLogin, getError, fetchAuthLogin, fetchAuthRegister } from "../../modules/auth";
-
+import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 import "./loginBlock.scss";
+import { getIsLogin, getError, fetchAuthLogin, fetchAuthRegister } from "../../modules/auth";
+
 const mainClass = "loginBlock";
 
 const LoginBlock = (props) => {
-  const { isRegister, fetchAuthLogin, fetchAuthRegister } = props;
+  const { isRegister, fetchAuthLogin, fetchAuthRegister, isLogin } = props;
   const className = classNames(mainClass, props.className);
   const header = isRegister ? "Регистрация" : "Войти";
   const question = isRegister
     ? "Уже зарегистрированы?"
     : "Новый пользователь?";
   const linkName = isRegister ? "Войти" : "Зарегистрируйтесь";
+  const history = useHistory();
 
   const [values, setValues] = useState({  
     email: "",
@@ -33,6 +34,11 @@ const LoginBlock = (props) => {
     name: "",
     surname:""
   });
+
+  useEffect(()=>{
+    if (isLogin)
+      history.push("/map");
+  },[isLogin])
 
   const handlerSubmitClick = (event) => {
     event.preventDefault();
@@ -153,6 +159,7 @@ const mapStateToProps = (state) => ({
   isLogin: getIsLogin(state),
   error: getError(state),
 });
+
 const mapDispatchToProps = { fetchAuthLogin, fetchAuthRegister };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginBlock);
