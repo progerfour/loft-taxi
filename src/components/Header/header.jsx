@@ -1,26 +1,29 @@
-import React, { useContext } from "react";
+import React from "react";
 import classNames from "classnames";
 import { Grid, Paper, Button, Toolbar } from "@material-ui/core/";
 import { Logo } from "loft-taxi-mui-theme";
 import PropTypes from "prop-types";
+import { useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 
 import "./header.scss";
 import { pagesMap } from "../../utils";
-import { AuthContext } from "../../context/authContext";
+import { fetchAuthLogout } from "../../modules/auth";
+
 const mainClass = "header";
 
-const Header = ({ className, onChangePage }) => {
-  const { logout } = useContext(AuthContext);
+const Header = ({ className, fetchAuthLogout }) => {
   const classes = classNames(className, mainClass);
-
+  const history = useHistory();
   const pages = [pagesMap.map, pagesMap.profile, pagesMap.exit];
 
   const handleBtnClick = (event) => {
     event.preventDefault();
     const { currentTarget } = event;
 
-    if (currentTarget.id === pagesMap.exit.id) logout();
-    else typeof onChangePage == "function" && onChangePage(currentTarget.id);
+    if (currentTarget.id === pagesMap.exit.id) {
+      fetchAuthLogout();
+    } else history.push(`/${currentTarget.id}`);
   };
 
   return (
@@ -55,7 +58,8 @@ const Header = ({ className, onChangePage }) => {
 
 Header.propTypes = {
   className: PropTypes.string,
-  onChangePage: PropTypes.func.isRequired,
 };
 
-export default Header;
+const mapDispatchToProps = { fetchAuthLogout };
+
+export default connect(null, mapDispatchToProps)(Header);

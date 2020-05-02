@@ -13,10 +13,6 @@ class Map extends Component {
   map_id = "map_order";
   mapContainer = React.createRef();
 
-  static propTypes = {
-    onChangePage: PropTypes.func.isRequired,
-  };
-
   componentDidMount() {
     mapboxgl.accessToken =
       "pk.eyJ1Ijoic2F0YW5zZGVlciIsImEiOiJjanAwOGxqYnAyc3J4M3hucmJzaWh4OTg0In0.LSKzagFIJqivwgf4VFjC4Q";
@@ -33,11 +29,14 @@ class Map extends Component {
   }
 
   render() {
-    const { onChangePage } = this.props;
     return (
       <>
-        <Header onChangePage={onChangePage} />
-        <div id={this.map_id} className={`${mainClass}`} ref={this.mapContainer}></div>
+        <Header />
+        <div
+          id={this.map_id}
+          className={`${mainClass}`}
+          ref={this.mapContainer}
+        ></div>
       </>
     );
   }

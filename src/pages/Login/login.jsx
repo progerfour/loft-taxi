@@ -9,7 +9,7 @@ import "./login.scss";
 const mainClass = "loginPage";
 
 const Login = (props) => {
-  const { className, onChangePage } = props;
+  const { className } = props;
   const classes = classNames(className);
   return (
     <div className={classes}>
@@ -18,7 +18,7 @@ const Login = (props) => {
           <Logo white />
         </Grid>
         <Grid item xs={3}>
-          <LoginBlock onChangePage={onChangePage} isRegister={false} />
+          <LoginBlock isRegister={false} />
         </Grid>
       </Grid>
     </div>
@@ -27,7 +27,6 @@ const Login = (props) => {
 
 Login.propTypes = {
   className: PropTypes.string,
-  onChangePage: PropTypes.func.isRequired,
 };
 
 export default Login;

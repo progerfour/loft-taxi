@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState, useEffect } from "react";
 import classNames from "classnames";
 import {
   Grid,
   Paper,
-  Link,
   Typography,
   Button,
   FormControl,
@@ -11,36 +10,49 @@ import {
   Input,
 } from "@material-ui/core/";
 import PropTypes from "prop-types";
+import { Link, useHistory } from "react-router-dom";
+import { connect } from "react-redux";
 
-import { AuthContext } from "../../context/authContext";
 import "./loginBlock.scss";
+import {
+  getIsLogin,
+  getError,
+  fetchAuthLogin,
+  fetchAuthRegister,
+} from "../../modules/auth";
+
 const mainClass = "loginBlock";
 
 const LoginBlock = (props) => {
-  const { login } = useContext(AuthContext);
+  const { isRegister, fetchAuthLogin, fetchAuthRegister, isLogin } = props;
   const className = classNames(mainClass, props.className);
-  const header = props.isRegister ? "Регистрация" : "Войти";
-  const question = props.isRegister ? "Уже зарегистрированы?" : "Новый пользователь?";
-  const linkName = props.isRegister ? "Войти" : "Зарегистрируйтесь";
+  const header = isRegister ? "Регистрация" : "Войти";
+  const question = isRegister ? "Уже зарегистрированы?" : "Новый пользователь?";
+  const linkName = isRegister ? "Войти" : "Зарегистрируйтесь";
+  const history = useHistory();
 
   const [values, setValues] = useState({
-    username: "",
+    email: "",
     password: "",
+    name: "",
+    surname: "",
   });
+
+  useEffect(() => {
+    if (isLogin) history.push("/map");
+  }, [isLogin]);
 
   const handlerSubmitClick = (event) => {
     event.preventDefault();
-    login(values.username, values.password);
-  };
-
-  const changeType = () => {
-    const { onChangePage, isRegister } = props;
-    typeof onChangePage == "function" && onChangePage(isRegister ? "login" : "register");
+    isRegister
+      ? fetchAuthRegister(values)
+      : fetchAuthLogin({ email: values.email, password: values.password });
   };
 
   const handlerDataInput = (inputID) => (event) => {
     setValues({ ...values, [inputID]: event.target.value });
   };
+
   return (
     <Paper elevation={1} className={className}>
       <form onSubmit={handlerSubmitClick}>
@@ -54,40 +66,72 @@ const LoginBlock = (props) => {
             >
               {header}
             </Typography>
-            <Typography component="p" align="left" className={`${mainClass}__register`}>
+            <Typography
+              component="p"
+              align="left"
+              className={`${mainClass}__register`}
+            >
               {question}
-              <Link onClick={changeType}>{linkName} </Link>
+              <Link to={`/${isRegister ? "login" : "register"}`}>
+                {linkName}
+              </Link>
             </Typography>
           </Grid>
           {!props.isRegister && (
             <Grid item xs={12}>
-              <FormControl fullWidth={true} className={`${mainClass}__bottom_30`}>
+              <FormControl
+                fullWidth={true}
+                className={`${mainClass}__bottom_30`}
+              >
                 <InputLabel htmlFor="username">Имя пользователя *</InputLabel>
-                <Input id="username" onChange={handlerDataInput("username")} required />
+                <Input
+                  id="email"
+                  onChange={handlerDataInput("email")}
+                  required
+                />
               </FormControl>
             </Grid>
           )}
           {props.isRegister && (
             <Grid item xs={12}>
-              <FormControl fullWidth={true} className={`${mainClass}__bottom_30`}>
-                <InputLabel htmlFor="email">Адрес электронной почты *</InputLabel>
-                <Input id="email" onChange={handlerDataInput("username")} required />
+              <FormControl
+                fullWidth={true}
+                className={`${mainClass}__bottom_30`}
+              >
+                <InputLabel htmlFor="email">
+                  Адрес электронной почты *
+                </InputLabel>
+                <Input
+                  id="email"
+                  onChange={handlerDataInput("email")}
+                  required
+                />
               </FormControl>
             </Grid>
           )}
           {props.isRegister && (
             <Grid item xs={6}>
-              <FormControl fullWidth={true} className={`${mainClass}__bottom_30`}>
+              <FormControl
+                fullWidth={true}
+                className={`${mainClass}__bottom_30`}
+              >
                 <InputLabel htmlFor="name">Имя *</InputLabel>
-                <Input id="name" required />
+                <Input id="name" onChange={handlerDataInput("name")} required />
               </FormControl>
             </Grid>
           )}
           {props.isRegister && (
             <Grid item xs={6}>
-              <FormControl fullWidth={true} className={`${mainClass}__bottom_30`}>
+              <FormControl
+                fullWidth={true}
+                className={`${mainClass}__bottom_30`}
+              >
                 <InputLabel htmlFor="surname">Фамилия *</InputLabel>
-                <Input id="surname" required />
+                <Input
+                  id="surname"
+                  onChange={handlerDataInput("surname")}
+                  required
+                />
               </FormControl>
             </Grid>
           )}
@@ -116,7 +160,13 @@ const LoginBlock = (props) => {
 LoginBlock.propTypes = {
   className: PropTypes.string,
   isRegister: PropTypes.bool.isRequired,
-  onChangePage: PropTypes.func.isRequired,
 };
 
-export default LoginBlock;
+const mapStateToProps = (state) => ({
+  isLogin: getIsLogin(state),
+  error: getError(state),
+});
+
+const mapDispatchToProps = { fetchAuthLogin, fetchAuthRegister };
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginBlock);
