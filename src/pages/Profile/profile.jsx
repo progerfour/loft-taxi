@@ -14,7 +14,7 @@ import {
 import { DatePicker } from "@material-ui/pickers";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import Header from "../../components/Header";
 import "./profile.scss";
@@ -40,13 +40,14 @@ const Profile = ({
   fetchProfileSubmitSucceded,
 }) => {
   const classes = classNames(className);
+
   const [values, setValues] = useState({
     cardNumber: "",
     cardName: "",
     cvc: "",
   });
+
   const [selectedDate, handleDateChange] = useState(new Date());
-  const history = useHistory();
 
   useEffect(() => {
     fetchProfileSubmitSucceded(false);
@@ -97,12 +98,8 @@ const Profile = ({
                 </Typography>
               </Grid>
               <Grid item xs={12} align="center">
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => history.push("/map")}
-                >
-                  Перейти на карту
+                <Button variant="contained" color="primary">
+                  <Link to="/map">Перейти на карту</Link>
                 </Button>
               </Grid>
             </Grid>

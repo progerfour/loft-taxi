@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import classNames from "classnames";
 import mapboxgl from "mapbox-gl";
 import PropTypes from "prop-types";
+import { Grid } from "@material-ui/core";
 
 import Header from "../../components/Header";
 import "./map.scss";
+import FillData from "./fillData";
+import Info from "./info";
+import Order from "./order";
 
 const mainClass = "map";
 
@@ -32,11 +36,14 @@ class Map extends Component {
     return (
       <>
         <Header />
-        <div
-          id={this.map_id}
-          className={`${mainClass}`}
-          ref={this.mapContainer}
-        ></div>
+        <Grid container>
+          <FillData className={`${mainClass}`} />
+          <div
+            id={this.map_id}
+            className={`${mainClass}`}
+            ref={this.mapContainer}
+          ></div>
+        </Grid>
       </>
     );
   }

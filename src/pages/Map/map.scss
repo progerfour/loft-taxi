@@ -1,8 +1,29 @@
-.map{
-    position: fixed;
-    width: 100vw;
-    height: calc(100vh - 68px);
-    border: none;
-    bottom: 0;
-    z-index: -1;
+.map {
+  position: fixed;
+  width: 100vw;
+  height: calc(100vh - 68px);
+  border: none;
+  bottom: 0;
+  z-index: -1;
+
+  &__paper {
+    width: 28%;
+    position: absolute;
+    top: 110px;
+    left: 20px;
+    padding: 44px 60px;
+    z-index: 1;
+  }
+
+  &__header {
+    margin-bottom: 30px !important;
+  }
+
+  &__text {
+    margin-bottom: 30px !important;
+  }
+
+  &__input {
+    margin-bottom: 30px !important;
+  }
 }
