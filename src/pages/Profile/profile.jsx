@@ -127,6 +127,7 @@ const Profile = ({
                           value={values.cardNumber}
                           onChange={handlerDataInput("cardNumber")}
                           autoFocus
+                          required
                         />
                         <InputLabel htmlFor="expiryDate">
                           Срок действия
@@ -158,8 +159,9 @@ const Profile = ({
                           id="cardName"
                           type="text"
                           placeholder="Иванов Иван"
-                          value={values.name}
+                          value={values.cardName}
                           onChange={handlerDataInput("cardName")}
+                          required
                         />
                         <InputLabel htmlFor="cvc">CVC</InputLabel>
                         <Input
@@ -168,6 +170,7 @@ const Profile = ({
                           placeholder="123"
                           value={values.cvc}
                           onChange={handlerDataInput("cvc")}
+                          required
                         />
                       </Box>
                     </Card>
