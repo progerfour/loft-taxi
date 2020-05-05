@@ -25,7 +25,6 @@ export function* loginWatch() {
         path: "auth",
         payload: action.payload,
       });
-      console.log(result);
       if (result.success) {
         yield put(fetchAuthSuccess(result.token));
         window.localStorage.setItem("token", result.token);

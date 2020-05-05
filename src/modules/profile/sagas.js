@@ -6,6 +6,8 @@ import {
   fetchProfileLoad,
   fetchProfileSubmitSucceded,
 } from "./actions";
+
+import { fetchIsFillProfile } from "../route";
 import { getToken } from "../auth";
 
 const getPaymentData = ({ token }) => {
@@ -38,6 +40,7 @@ export function* handlePaymentDataLoad() {
       const result = yield call(getPaymentData, { token });
       if (result.id) {
         yield put(fetchProfileSet(result));
+        yield put(fetchIsFillProfile());
       } else yield put(fetchProfileFailure(result.error));
     } catch (error) {
       yield put(fetchProfileFailure(error));

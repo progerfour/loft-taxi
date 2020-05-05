@@ -3,12 +3,18 @@ import classNames from "classnames";
 import mapboxgl from "mapbox-gl";
 import PropTypes from "prop-types";
 import { Grid } from "@material-ui/core";
+import { connect } from "react-redux";
 
 import Header from "../../components/Header";
 import "./map.scss";
 import FillData from "./fillData";
 import Info from "./info";
 import Order from "./order";
+import {
+  getIsFillProfile,
+  getAddress,
+  fetchAddressLoad,
+} from "../../modules/route";
 
 const mainClass = "mapPage";
 
@@ -33,11 +39,13 @@ class Map extends Component {
   }
 
   render() {
+    const { addressList, isFillProfile, fetchAddressLoad } = this.props;
     return (
       <div className={`${mainClass}`}>
         <Header />
         <Grid container>
-          <FillData className={`${mainClass}`} />
+          {isFillProfile && <Order className={`${mainClass}`} />}
+          {!isFillProfile && <FillData className={`${mainClass}`} />}
           <div
             id={this.map_id}
             className={`${mainClass}__map`}
@@ -49,4 +57,13 @@ class Map extends Component {
   }
 }
 
-export default Map;
+const mapStateToProps = (state) => ({
+  isFillProfile: getIsFillProfile(state),
+  addressList: getAddress(state),
+});
+
+const mapDispatchToProps = {
+  fetchAddressLoad,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Map);
