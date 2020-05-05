@@ -10,7 +10,7 @@ import FillData from "./fillData";
 import Info from "./info";
 import Order from "./order";
 
-const mainClass = "map";
+const mainClass = "mapPage";
 
 class Map extends Component {
   map = null;
@@ -34,17 +34,17 @@ class Map extends Component {
 
   render() {
     return (
-      <>
+      <div className={`${mainClass}`}>
         <Header />
         <Grid container>
           <FillData className={`${mainClass}`} />
           <div
             id={this.map_id}
-            className={`${mainClass}`}
+            className={`${mainClass}__map`}
             ref={this.mapContainer}
           ></div>
         </Grid>
-      </>
+      </div>
     );
   }
 }

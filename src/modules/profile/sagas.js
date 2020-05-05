@@ -6,7 +6,6 @@ import {
   fetchProfileLoad,
   fetchProfileSubmitSucceded,
 } from "./actions";
-
 import { getToken } from "../auth";
 
 const getPaymentData = ({ token }) => {
@@ -27,8 +26,9 @@ const setPaymentData = (token, payload) => {
     }),
     headers: {
       "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "https://loft-taxi.glitch.me/",
     },
-  });
+  }).then((response) => response.json());
 };
 
 export function* handlePaymentDataLoad() {
@@ -50,9 +50,9 @@ export function* handlePaymentDataSave() {
     try {
       const token = yield select(getToken);
       const result = yield call(setPaymentData, token, action.payload);
-      if (result.id) {
+      if (result.success) {
         yield put(fetchProfileSet(result));
-        yield put(fetchProfileSubmitSucceded(result));
+        yield put(fetchProfileSubmitSucceded(true));
       } else yield put(fetchProfileFailure(result.error));
     } catch (error) {
       yield put(fetchProfileFailure(error));

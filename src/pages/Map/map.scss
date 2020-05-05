@@ -1,10 +1,12 @@
-.map {
-  position: fixed;
-  width: 100vw;
-  height: calc(100vh - 68px);
-  border: none;
-  bottom: 0;
-  z-index: -1;
+.mapPage {
+  &__map {
+    position: fixed;
+    width: 100vw;
+    height: calc(100vh - 68px);
+    border: none;
+    bottom: 0;
+    z-index: -1;
+  }
 
   &__paper {
     width: 28%;

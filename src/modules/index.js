@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { fork } from "redux-saga/effects";
 
-import auth from "./auth";
+import auth, { sagas as authSaga } from "./auth";
 import profile, { sagas as profileSaga } from "./profile";
 
 export default combineReducers({
@@ -11,4 +11,5 @@ export default combineReducers({
 
 export function* rootSaga() {
   yield fork(profileSaga);
+  yield fork(authSaga);
 }
