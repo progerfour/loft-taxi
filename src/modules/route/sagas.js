@@ -14,17 +14,19 @@ const getAddress = () => {
   }).then((response) => response.json());
 };
 
-export function* loginWatch() {
-  yield takeEvery(fetchAddressLoad, function* () {
-    try {
-      const result = yield call(getAddress);
-      yield put(fetchAddressSuccess(result));
-    } catch (error) {
-      yield put(fetchAddressFailure(error));
-    }
-  });
+function* addressLoadFlow() {
+  try {
+    const result = yield call(getAddress);
+    yield put(fetchAddressSuccess(result.addresses));
+  } catch (error) {
+    yield put(fetchAddressFailure(error));
+  }
+}
+
+export function* addressLoadWatch() {
+  yield takeEvery(fetchAddressLoad, addressLoadFlow);
 }
 
 export default function* () {
-  yield fork(loginWatch);
+  yield fork(addressLoadWatch);
 }

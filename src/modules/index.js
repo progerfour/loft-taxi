@@ -14,4 +14,5 @@ export default combineReducers({
 export function* rootSaga() {
   yield fork(profileSaga);
   yield fork(authSaga);
+  yield fork(routeSaga);
 }

@@ -1,9 +1,16 @@
 import { handleActions } from "redux-actions";
 import { combineReducers } from "redux";
-import { fetchAddressSuccess, fetchIsFillProfile } from "./actions";
+import {
+  fetchAddressLoad,
+  fetchAddressSuccess,
+  fetchAddressFailure,
+  fetchIsFillProfile,
+  fetchIsOrder,
+} from "./actions";
 
 const address = handleActions(
   {
+    [fetchAddressLoad]: () => [],
     [fetchAddressSuccess]: (_state, action) => action.payload,
   },
   []
@@ -11,14 +18,22 @@ const address = handleActions(
 
 const error = handleActions(
   {
-    [fetchAddressSuccess]: (_state, action) => action.payload,
+    [fetchAddressLoad]: () => null,
+    [fetchAddressFailure]: (_state, action) => action.payload,
   },
   null
 );
 
 const isFillProfile = handleActions(
   {
-    [fetchIsFillProfile]: () => true,
+    [fetchIsFillProfile]: (_state, action) => action.payload,
+  },
+  false
+);
+
+const isOrder = handleActions(
+  {
+    [fetchIsOrder]: (_state, action) => action.payload,
   },
   false
 );
@@ -27,4 +42,5 @@ export default combineReducers({
   address,
   error,
   isFillProfile,
+  isOrder,
 });

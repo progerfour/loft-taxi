@@ -40,7 +40,7 @@ export function* handlePaymentDataLoad() {
       const result = yield call(getPaymentData, { token });
       if (result.id) {
         yield put(fetchProfileSet(result));
-        yield put(fetchIsFillProfile());
+        yield put(fetchIsFillProfile(true));
       } else yield put(fetchProfileFailure(result.error));
     } catch (error) {
       yield put(fetchProfileFailure(error));

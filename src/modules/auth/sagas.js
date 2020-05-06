@@ -7,6 +7,7 @@ import {
   fetchAuthLogout,
 } from "./actions";
 import { fetchProfileClear } from "../profile";
+import { fetchIsFillProfile } from "../route";
 
 const request = ({ path, payload }) => {
   return fetch(`https://loft-taxi.glitch.me/${path}`, {
@@ -19,32 +20,22 @@ const request = ({ path, payload }) => {
 };
 
 export function* loginWatch() {
-  yield takeEvery(fetchAuthLogin, function* (action) {
+  yield takeEvery([fetchAuthLogin, fetchAuthRegister], function* (action) {
     try {
-      const result = yield call(request, {
-        path: "auth",
+      let params = {
+        path: "register",
         payload: action.payload,
-      });
+      };
+      if ((action.type = fetchAuthLogin.toString())) {
+        params = {
+          path: "auth",
+          payload: action.payload,
+        };
+      }
+      const result = yield call(request, params);
       if (result.success) {
         yield put(fetchAuthSuccess(result.token));
         window.localStorage.setItem("token", result.token);
-      } else yield put(fetchAuthFailure(result.error));
-    } catch (error) {
-      yield put(fetchAuthFailure(error));
-    }
-  });
-}
-
-export function* registerWatch() {
-  yield takeEvery(fetchAuthRegister, function* (action) {
-    try {
-      const result = yield call(request, {
-        path: "register",
-        payload: action.payload,
-      });
-      if (result.success) {
-        yield put(fetchAuthSuccess(result.token));
-        yield window.localStorage.setItem("token", result.token);
       } else yield put(fetchAuthFailure(result.error));
     } catch (error) {
       yield put(fetchAuthFailure(error));
@@ -57,6 +48,7 @@ export function* logoutWatch() {
     try {
       yield window.localStorage.removeItem("token");
       yield put(fetchProfileClear());
+      yield put(fetchIsFillProfile(false));
     } catch (error) {
       yield put(fetchAuthFailure(error));
     }
@@ -65,6 +57,5 @@ export function* logoutWatch() {
 
 export default function* () {
   yield fork(loginWatch);
-  yield fork(registerWatch);
   yield fork(logoutWatch);
 }
