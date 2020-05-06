@@ -7,7 +7,7 @@ import {
   fetchAuthLogout,
 } from "./actions";
 import { fetchProfileClear } from "../profile";
-import { fetchIsFillProfile } from "../route";
+import { fetchIsFillProfile, fetchIsOrder, fetchOrderClear } from "../route";
 
 const request = ({ path, payload }) => {
   return fetch(`https://loft-taxi.glitch.me/${path}`, {
@@ -26,7 +26,7 @@ export function* loginWatch() {
         path: "register",
         payload: action.payload,
       };
-      if ((action.type = fetchAuthLogin.toString())) {
+      if (action.type === fetchAuthLogin.toString()) {
         params = {
           path: "auth",
           payload: action.payload,
@@ -49,6 +49,8 @@ export function* logoutWatch() {
       yield window.localStorage.removeItem("token");
       yield put(fetchProfileClear());
       yield put(fetchIsFillProfile(false));
+      yield put(fetchOrderClear());
+      yield put(fetchIsOrder(false));
     } catch (error) {
       yield put(fetchAuthFailure(error));
     }

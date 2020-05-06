@@ -3,7 +3,6 @@ import { Grid, Paper, Button, TextField } from "@material-ui/core";
 import { connect } from "react-redux";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-import Info from "./info";
 import {
   getAddress,
   fetchAddressLoad,
@@ -16,7 +15,6 @@ const Order = ({
   addressList,
   fetchAddressLoad,
   fetchOrderLoad,
-  isOrder,
 }) => {
   const [order, setOrder] = useState({
     begin: "",
@@ -27,10 +25,14 @@ const Order = ({
 
   useEffect(() => {
     fetchAddressLoad();
-  }, []);
+  }, [fetchAddressLoad]);
 
   useEffect(() => {
-    setOrder({ ...order, beginList: addressList, endList: addressList });
+    setOrder((order) => ({
+      ...order,
+      beginList: addressList,
+      endList: addressList,
+    }));
   }, [addressList]);
 
   const updateAddressList = (exclude) =>
@@ -38,64 +40,52 @@ const Order = ({
 
   const handlerSubmitClick = (event) => {
     event.preventDefault();
-    fetchOrderLoad();
+    if (order.begin && order.end)
+      fetchOrderLoad({ address1: order.begin, address2: order.end });
   };
 
   return (
     <>
-      {isOrder && <Info className={`${className}`} />}
-      {!isOrder && (
-        <form onSubmit={handlerSubmitClick}>
-          <Paper className={`${className}__paper`}>
-            <Grid item xs={12} className={`${className}__input`}>
-              <Autocomplete
-                name="begin"
-                options={order.beginList}
-                onChange={(event, selected) => {
-                  if (selected !== null) {
-                    setOrder({
-                      ...order,
-                      endList: updateAddressList(selected),
-                      start: selected,
-                    });
-                  }
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} label="Откуда" />
-                )}
-              />
-            </Grid>
+      <form onSubmit={handlerSubmitClick}>
+        <Paper className={`${className}__paper`}>
+          <Grid item xs={12} className={`${className}__input`}>
+            <Autocomplete
+              name="begin"
+              options={order.beginList}
+              onChange={(event, selected) => {
+                setOrder({
+                  ...order,
+                  endList: updateAddressList(selected),
+                  begin: selected,
+                });
+              }}
+              renderInput={(params) => <TextField {...params} label="Откуда" />}
+            />
+          </Grid>
 
-            <Grid item xs={12} className={`${className}__input`}>
-              <Autocomplete
-                name="end"
-                options={order.endList}
-                onChange={(event, selected) => {
-                  if (selected !== null) {
-                    setOrder({
-                      ...order,
-                      beginList: updateAddressList(selected),
-                      end: selected,
-                    });
-                  }
-                }}
-                renderInput={(params) => <TextField {...params} label="Куда" />}
-              />
-            </Grid>
+          <Grid item xs={12} className={`${className}__input`}>
+            <Autocomplete
+              name="end"
+              options={order.endList}
+              onChange={(event, selected) => {
+                setOrder({
+                  ...order,
+                  beginList: updateAddressList(selected),
+                  end: selected,
+                });
+              }}
+              renderInput={(params) => <TextField {...params} label="Куда" />}
+            />
+          </Grid>
 
-            <Grid item xs={12}>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-              >
-                Вызвать такси
-              </Button>
-            </Grid>
-          </Paper>
-        </form>
-      )}
+          <Grid item xs={12}>
+            <Button type="submit" variant="contained" color="primary" fullWidth>
+              Вызвать такси
+            </Button>
+          </Grid>
+        </Paper>
+      </form>
+      )
     </>
   );
 };

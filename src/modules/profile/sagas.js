@@ -54,7 +54,7 @@ export function* handlePaymentDataSave() {
       const token = yield select(getToken);
       const result = yield call(setPaymentData, token, action.payload);
       if (result.success) {
-        yield put(fetchProfileSet(result));
+        yield put(fetchProfileSet(action.payload));
         yield put(fetchProfileSubmitSucceded(true));
       } else yield put(fetchProfileFailure(result.error));
     } catch (error) {

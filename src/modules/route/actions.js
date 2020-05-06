@@ -8,3 +8,4 @@ export const fetchOrderLoad = createAction("FETCH_ORDER_LOAD");
 export const fetchOrderSuccess = createAction("FETCH_ORDER_SUCCESS");
 export const fetchOrderFailure = createAction("FETCH_ORDER_FAILURE");
 export const fetchIsOrder = createAction("FETCH_IS_ORDER");
+export const fetchOrderClear = createAction("FETCH_ORDER_CLEAR");

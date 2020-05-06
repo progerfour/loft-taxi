@@ -1,7 +1,10 @@
 import React from "react";
 import { Grid, Paper, Typography, Button } from "@material-ui/core";
 
-const Info = ({ className }) => {
+const Info = ({ className, handlerNewOrder }) => {
+  const handlerClickNewOrder = () => {
+    typeof handlerNewOrder === "function" && handlerNewOrder();
+  };
   return (
     <Paper className={`${className}__paper`}>
       <Grid item xs={12}>
@@ -20,7 +23,12 @@ const Info = ({ className }) => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Button variant="contained" color="primary" fullWidth>
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={handlerClickNewOrder}
+        >
           Сделать новый заказ
         </Button>
       </Grid>

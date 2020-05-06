@@ -6,6 +6,10 @@ import {
   fetchAddressFailure,
   fetchIsFillProfile,
   fetchIsOrder,
+  fetchOrderLoad,
+  fetchOrderSuccess,
+  fetchOrderFailure,
+  fetchOrderClear,
 } from "./actions";
 
 const address = handleActions(
@@ -18,8 +22,8 @@ const address = handleActions(
 
 const error = handleActions(
   {
-    [fetchAddressLoad]: () => null,
     [fetchAddressFailure]: (_state, action) => action.payload,
+    [fetchOrderFailure]: (_state, action) => action.payload,
   },
   null
 );
@@ -33,9 +37,19 @@ const isFillProfile = handleActions(
 
 const isOrder = handleActions(
   {
+    [fetchOrderLoad]: () => false,
     [fetchIsOrder]: (_state, action) => action.payload,
   },
   false
+);
+
+const route = handleActions(
+  {
+    [fetchOrderLoad]: () => [],
+    [fetchOrderSuccess]: (_state, action) => action.payload,
+    [fetchOrderClear]: () => [],
+  },
+  []
 );
 
 export default combineReducers({
@@ -43,4 +57,5 @@ export default combineReducers({
   error,
   isFillProfile,
   isOrder,
+  route,
 });

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import classNames from "classnames";
 import { MCIcon } from "loft-taxi-mui-theme";
 import {
   Grid,
@@ -22,25 +21,19 @@ import {
   getProfile,
   getError,
   getSubmitSucceded,
-  fetchProfileLoad,
   fetchProfileSave,
-  fetchProfileSet,
   fetchProfileSubmitSucceded,
 } from "../../modules/profile";
 
 const mainClass = "profile";
 
 const Profile = ({
-  className,
   profile,
   error,
   submitSucceded,
-  fetchProfileLoad,
   fetchProfileSave,
   fetchProfileSubmitSucceded,
 }) => {
-  const classes = classNames(className);
-
   const [values, setValues] = useState({
     cardNumber: "",
     cardName: "",
@@ -51,7 +44,7 @@ const Profile = ({
 
   useEffect(() => {
     fetchProfileSubmitSucceded(false);
-  }, []);
+  }, [fetchProfileSubmitSucceded]);
 
   useEffect(() => {
     if (profile) {
@@ -207,7 +200,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  fetchProfileLoad,
   fetchProfileSave,
   fetchProfileSubmitSucceded,
 };
