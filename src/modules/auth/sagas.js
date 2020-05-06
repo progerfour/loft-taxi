@@ -19,42 +19,45 @@ const request = ({ path, payload }) => {
   }).then((response) => response.json());
 };
 
-export function* loginWatch() {
-  yield takeEvery([fetchAuthLogin, fetchAuthRegister], function* (action) {
-    try {
-      let params = {
-        path: "register",
+function* loginFlow(action) {
+  try {
+    let params = {
+      path: "register",
+      payload: action.payload,
+    };
+    if (action.type === fetchAuthLogin.toString()) {
+      params = {
+        path: "auth",
         payload: action.payload,
       };
-      if (action.type === fetchAuthLogin.toString()) {
-        params = {
-          path: "auth",
-          payload: action.payload,
-        };
-      }
-      const result = yield call(request, params);
-      if (result.success) {
-        yield put(fetchAuthSuccess(result.token));
-        window.localStorage.setItem("token", result.token);
-      } else yield put(fetchAuthFailure(result.error));
-    } catch (error) {
-      yield put(fetchAuthFailure(error));
     }
-  });
+    const result = yield call(request, params);
+    if (result.success) {
+      yield put(fetchAuthSuccess(result.token));
+      window.localStorage.setItem("token", result.token);
+    } else yield put(fetchAuthFailure(result.error));
+  } catch (error) {
+    yield put(fetchAuthFailure(error));
+  }
+}
+export function* loginWatch() {
+  yield takeEvery([fetchAuthLogin, fetchAuthRegister], loginFlow);
+}
+
+function* logoutFlow() {
+  try {
+    yield window.localStorage.removeItem("token");
+    yield put(fetchProfileClear());
+    yield put(fetchIsFillProfile(false));
+    yield put(fetchOrderClear());
+    yield put(fetchIsOrder(false));
+  } catch (error) {
+    yield put(fetchAuthFailure(error));
+  }
 }
 
 export function* logoutWatch() {
-  yield takeEvery(fetchAuthLogout, function* () {
-    try {
-      yield window.localStorage.removeItem("token");
-      yield put(fetchProfileClear());
-      yield put(fetchIsFillProfile(false));
-      yield put(fetchOrderClear());
-      yield put(fetchIsOrder(false));
-    } catch (error) {
-      yield put(fetchAuthFailure(error));
-    }
-  });
+  yield takeEvery(fetchAuthLogout, logoutFlow);
 }
 
 export default function* () {

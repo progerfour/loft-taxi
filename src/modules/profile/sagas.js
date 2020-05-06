@@ -33,37 +33,41 @@ const setPaymentData = (token, payload) => {
   }).then((response) => response.json());
 };
 
-export function* handlePaymentDataLoad() {
-  yield takeEvery(fetchProfileLoad, function* () {
-    try {
-      const token = yield select(getToken);
-      const result = yield call(getPaymentData, { token });
-      if (result.id) {
-        yield put(fetchProfileSet(result));
-        yield put(fetchIsFillProfile(true));
-      } else yield put(fetchProfileFailure(result.error));
-    } catch (error) {
-      yield put(fetchProfileFailure(error));
-    }
-  });
+function* paymentDataLoadFlow() {
+  try {
+    const token = yield select(getToken);
+    const result = yield call(getPaymentData, { token });
+    if (result.id) {
+      yield put(fetchProfileSet(result));
+      yield put(fetchIsFillProfile(true));
+    } else yield put(fetchProfileFailure(result.error));
+  } catch (error) {
+    yield put(fetchProfileFailure(error));
+  }
 }
 
-export function* handlePaymentDataSave() {
-  yield takeEvery(fetchProfileSave, function* (action) {
-    try {
-      const token = yield select(getToken);
-      const result = yield call(setPaymentData, token, action.payload);
-      if (result.success) {
-        yield put(fetchProfileSet(action.payload));
-        yield put(fetchProfileSubmitSucceded(true));
-      } else yield put(fetchProfileFailure(result.error));
-    } catch (error) {
-      yield put(fetchProfileFailure(error));
-    }
-  });
+export function* paymentDataLoadWatch() {
+  yield takeEvery(fetchProfileLoad, paymentDataLoadFlow);
+}
+
+function* paymentDataSaveFlow(action) {
+  try {
+    const token = yield select(getToken);
+    const result = yield call(setPaymentData, token, action.payload);
+    if (result.success) {
+      yield put(fetchProfileSet(action.payload));
+      yield put(fetchProfileSubmitSucceded(true));
+    } else yield put(fetchProfileFailure(result.error));
+  } catch (error) {
+    yield put(fetchProfileFailure(error));
+  }
+}
+
+export function* paymentDataSaveWatch() {
+  yield takeEvery(fetchProfileSave, paymentDataSaveFlow);
 }
 
 export default function* () {
-  yield fork(handlePaymentDataLoad);
-  yield fork(handlePaymentDataSave);
+  yield fork(paymentDataLoadWatch);
+  yield fork(paymentDataSaveWatch);
 }
