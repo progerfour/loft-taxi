@@ -30,6 +30,7 @@ const token = handleActions(
 const error = handleActions(
   {
     [fetchAuthLogin]: () => null,
+    [fetchAuthRegister]: () => null,
     [fetchAuthFailure]: (_state, action) => action.payload,
   },
   null

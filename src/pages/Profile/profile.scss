@@ -2,39 +2,24 @@
   min-height: 100vh;
   background-image: url("../../images/login-background.jpg");
   background-size: cover;
-  padding: 0 60px;
-  &__form {
-    padding: 44px 60px;
-    margin-top: 48px;
-    margin-bottom: 48px;
+
+  &__paper {
+    padding: 40px 60px;
   }
 
   &__subtitle {
     color: rgba(0, 0, 0, 0.54);
-    margin-bottom: 40px;
-  }
-
-  &__btnSave {
-    margin-top: 24px !important;
-    margin-left: 8px !important;
-  }
-
-  &__cards {
-    flex-grow: 1;
-    margin-bottom: 1px;
+    margin-bottom: 40px !important;
   }
 
   &__card {
-    width: 300px;
-    height: 189px;
-    position: "relative";
-    padding-top: 16px;
-    padding-left: 32px;
-    padding-right: 32px;
-    padding-bottom: 16px;
+    width: 240px;
+    height: 160px;
+    padding: 16px 32px;
+    position: relative;
   }
 
-  &__message {
-    margin-bottom: 30;
+  &__button {
+    margin-top: 24px !important;
   }
 }
